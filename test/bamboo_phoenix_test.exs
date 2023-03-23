@@ -28,6 +28,18 @@ defmodule Bamboo.PhoenixTest do
       |> render(:text_and_html_email)
     end
 
+    def text_email_with_layout do
+      new_email()
+      |> put_text_layout({PhoenixLayouts, "app_text"})
+      |> render("text_email_text")
+    end
+
+    def html_email_with_layout do
+      new_email()
+      |> put_html_layout({PhoenixLayouts, "app_html"})
+      |> render("html_email_html")
+    end
+
     def text_and_html_email do
       new_email()
       |> render(:text_and_html_email)
@@ -70,6 +82,20 @@ defmodule Bamboo.PhoenixTest do
 
     assert email.html_body =~ "HTML layout"
     assert email.html_body =~ "HTML body"
+    assert email.text_body =~ "TEXT layout"
+    assert email.text_body =~ "TEXT body"
+  end
+
+  test "render/2 allows setting a custom layout only for html" do
+    email = Email.html_email_with_layout()
+
+    assert email.html_body =~ "HTML layout"
+    assert email.html_body =~ "HTML body"
+  end
+
+  test "render/2 allows setting a custom layout only for text" do
+    email = Email.text_email_with_layout()
+
     assert email.text_body =~ "TEXT layout"
     assert email.text_body =~ "TEXT body"
   end
