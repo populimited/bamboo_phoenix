@@ -275,13 +275,13 @@ defmodule Bamboo.Phoenix do
   end
 
   defp put_template(email, template) do
-    email |> put_private(:template, template)
+    email |> put_private(:tpl, template)
   end
 
-  defp render(%{private: %{template: template}} = email) when is_atom(template) do
+  defp render(%{private: %{tpl: template}} = email) when is_atom(template) do
     template = Atom.to_string(template)
 
-    %{email | private: %{email.private | template: template}}
+    %{email | private: %{email.private | tpl: template}}
     |> render_html_and_text_emails()
   end
 
@@ -291,12 +291,12 @@ defmodule Bamboo.Phoenix do
 
   defp render_html_and_text_emails(email) do
     email
-    |> Map.put(:html_body, render_html(email, email.private.template <> "_html"))
-    |> Map.put(:text_body, render_text(email, email.private.template <> "_text"))
+    |> Map.put(:html_body, render_html(email, email.private.tpl <> "_html"))
+    |> Map.put(:text_body, render_text(email, email.private.tpl <> "_text"))
   end
 
   defp render_text_or_html_email(email) do
-    template = email.private.template
+    template = email.private.tpl
 
     cond do
       String.ends_with?(template, "_html") ->
