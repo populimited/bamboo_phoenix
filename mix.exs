@@ -37,7 +37,7 @@ defmodule BambooPhoenix.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:bamboo, ">= 2.0.0"},
+      {:bamboo, "~> 2.3.0"},
       {:phoenix, ">= 1.7.0"},
       {:phoenix_html, "~> 3.0", only: :test},
       {:phoenix_live_view, "~> 0.18", only: :test},
